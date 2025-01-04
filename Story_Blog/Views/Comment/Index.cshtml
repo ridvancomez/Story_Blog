@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ServerLayout.cshtml";
+}
+@model List<Story_Blog.Controllers.ServerController.CommentViewModel>
+
+<div class="container mt-4">
+    @Html.ActionLink("Yeni Yorum Ekle", "CreateComment", "Comment", new { @class = "btn btn-success" })
+    <table class="table table-hover mt-4">
+        <thead>
+            <tr>
+                <td>Blog Adı</td>
+                <td>Yazar</td>
+                <td>Tarih</td>
+                <td>Sil</td>
+                <td>Güncelle</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Blog.Title</td>
+                    <td>@item.Author.Name</td>
+                    <td>@item.DateCreated</td>
+                    <td><button class="btn btn-danger" onclick="DeleteComment(@item.Id)">Sil</button></td>
+                    <td>@Html.ActionLink("Düzenle", "EditComment", "Comment", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function DeleteComment(id) {
+        if (confirm("Yorumu Silmek İstediğinize Emin Misiniz?")) {
+            $.ajax({
+                url: "/Comment/DeleteComment",
+                type: "Get",
+                data: { id: id },
+                success: function (data) {
+                    alert("Yorum Başaryla silindi");
+                    location.reload();
+                },
+                error: function (data) {
+                    alert("Yorum silinemedi");
+                }
+            });
+        }
+    }
+
+</script>
+

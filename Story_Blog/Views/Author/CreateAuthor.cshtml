@@ -1,0 +1,40 @@
+﻿@model Story_Blog.Models.Author
+@{
+    ViewBag.Title = "CreateAuthor";
+    Layout = "~/Views/Shared/_ServerLayout.cshtml";
+}
+
+<div class="container mt-4">
+    @using (Html.BeginForm("CreateAuthor", "Author", FormMethod.Post))
+    {
+
+        <div class="form-group mt-4">
+            <label>İsim</label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "", maxlength = "50" })
+            @Html.HiddenFor(m => m.Id)
+        </div>
+
+        <div class="form-group mt-4">
+            <label>E Posta</label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "", maxlength = "50", type = "email" })
+        </div>
+        <div class="form-group mt-4">
+            <label>Şifre</label>
+            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", required = "", type = "password" })
+        </div>
+        <div class="form-group mt-4">
+            <label>Rol</label>
+            @Html.DropDownListFor(m => m.Role,
+                   new SelectList(Enum.GetValues(typeof(Story_Blog.Models.Role))
+                       .Cast<Story_Blog.Models.Role>()
+                       .Select(r => new { Value = (int)r, Text = r.ToString() }),
+                   "Value", "Text", Story_Blog.Models.Role.Admin),
+                   "-Rol Seçin-",
+                   new { @class = "form-control", required = "" })
+        </div>
+        <div class="form-group mt-4">
+            <button class="btn btn-success" type="submit">Kullanıcıyı Kaydet</button>
+        </div>
+    }
+</div>
+

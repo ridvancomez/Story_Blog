@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ServerLayout.cshtml";
+}
+@using Story_Blog.Controllers.ServerController;
+@model List<BlogViewModel>
+<div class="container">
+
+    <button class="btn btn-success mt-4"> @Html.ActionLink("Yeni Blog Ekle", "CreateBlog", "Blog", null, new { @class = "nav-link" })</button>
+    <table class="table table-hover mt-4">
+        <thead>
+            <tr>
+                <th>Başlık</th>
+                <th>Oluşturulma Tarihi</th>
+                <th>Yazar</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.DateCreated</td>
+                    <td>@item.Author.Name </td>
+                    <td><button class="btn btn-danger" onclick="deleteBlogPost(@item.Id)">Sil</button></td>
+                    <td> @Html.ActionLink("Güncelle", "EditBlog", "Blog", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    function deleteBlogPost(id) {
+        if (confirm("Silmek İstediğinize emin misiniz")) {
+            $.ajax({
+                type: "GET",
+                url: "/Blog/DeleteBlog",
+                data: { id: id },
+                success: function (data) {
+                    alert("Başarıyla Silindi");
+                    location.reload();
+                },
+                error: function (data) {
+                    alert("Silme işlemi başarısız oldu");
+                }
+            });
+        }
+
+    }
+
+</script>

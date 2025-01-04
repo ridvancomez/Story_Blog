@@ -1,0 +1,52 @@
+﻿@using Story_Blog.Models;
+@model List<Author>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ServerLayout.cshtml";
+}
+
+<div class="container">
+
+    <button class="btn btn-success mt-4"> @Html.ActionLink("Yeni Kullanıcı Ekle", "CreateAuthor", "Author", null, new { @class = "nav-link" })</button>
+    <table class="table table-hover mt-4">
+        <thead>
+            <tr>
+                <th>İsim</th>
+                <th>E Posta</th>
+                <th>Rol</th>
+                <th>Sil</th>
+                <th>Güncelle</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Role </td>
+                    <td><button class="btn btn-danger" onclick="deleteAuthor(@item.Id)">Sil</button></td>
+                    <td> @Html.ActionLink("Güncelle", "EditAuthor", "Author", new { id = item.Id }, new { @class = "btn btn-warning" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<script>
+    function deleteAuthor(id) {
+        if (confirm("Bu kaydı silmek istediğinize emin misiniz?")) {
+            fetch(`/Author/DeleteAuthor/${id}`, {
+                method: 'Get'
+            }).then(response => {
+                if (response.ok) {
+                    alert("Kayıt başarıyla silindi.");
+                    location.reload(); // Sayfayı yeniden yükler
+                } else {
+                    alert("Bir hata oluştu.");
+                }
+            });
+        }
+    }
+</script>

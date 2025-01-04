@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model List<Story_Blog.Models.Blog> 
+<main>
+    @foreach (var item in Model)
+	{
+        @Html.ActionLink($"{item.Title}", "About", "Home", new {id= item.Id}, new { style = "font-size : 30px " })
+        <h4>@item.CoverLetter</h4>
+	}
+</main>
