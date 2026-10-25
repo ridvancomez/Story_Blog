@@ -69,3 +69,4 @@
 Story_Blog/Content/** linguist-vendored
 Story_Blog/Content/Site.css linguist-vendored=false
 Story_Blog/Scripts/** linguist-vendored
+Story_Blog/story/** linguist-vendored
