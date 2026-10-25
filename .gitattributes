@@ -61,3 +61,11 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+
+###############################################################################
+# Vendor / third-party assets excluded from GitHub language statistics
+###############################################################################
+Story_Blog/Content/** linguist-vendored
+Story_Blog/Content/Site.css linguist-vendored=false
+Story_Blog/Scripts/** linguist-vendored
